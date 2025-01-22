@@ -11,6 +11,7 @@ import com.lenze.sdc.worklog.core.dao.service.DailyStatusDaoService;
 import com.lenze.sdc.worklog.core.dao.service.UsersDaoService;
 import com.lenze.sdc.worklog.core.exception.UserNotfoundException;
 import com.lenze.sdc.worklog.core.model.UserModel;
+import com.lenze.sdc.worklog.core.model.UsersEmbeddedId;
 import com.lenze.sdc.worklog.core.model.WorklogModel;
 
 @Service
@@ -52,7 +53,10 @@ public class WorklogCoreService {
 	}
 
 	public void deleteUser(String id) {
-		usersDaoService.deleteUser(id);
+		UserModel user = usersDaoService.findById(id);
+		UsersEmbeddedId usersEmbeddedId = new UsersEmbeddedId(id, user.getUserName());
+		usersDaoService.deleteUser(usersEmbeddedId);
+		statusDaoService.deleteDailyStatusByUserName(user.getUserName());
 	}
 
 	public List<UserModel> findAllUsers() {

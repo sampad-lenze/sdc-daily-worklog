@@ -2,7 +2,6 @@ package com.lenze.sdc.worklog.daoservice;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lenze.sdc.worklog.core.dao.service.UsersDaoService;
 import com.lenze.sdc.worklog.core.exception.UserNotfoundException;
 import com.lenze.sdc.worklog.core.model.UserModel;
+import com.lenze.sdc.worklog.core.model.UsersEmbeddedId;
 import com.lenze.sdc.worklog.mapper.UserMapper;
 import com.lenze.sdc.worklog.persistence.UserEntity;
 import com.lenze.sdc.worklog.persistence.UsersRepository;
@@ -39,18 +39,18 @@ public class UsersDaoServiceImpl implements UsersDaoService{
 
 	@Override
 	@Transactional
-	public void deleteUser(String id) {
-		usersRepository.deleteById(id);
+	public void deleteUser(UsersEmbeddedId usersEmbeddedId) {
+		usersRepository.deleteByIdAndName(usersEmbeddedId.getUserId(), usersEmbeddedId.getUserName());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public UserModel findById(String id) {
-		Optional<UserEntity> optionalUser = usersRepository.findById(id);
-		if(optionalUser.isEmpty()) {
+		UserEntity user = usersRepository.findByUserId(id);
+		if(Objects.isNull(user)) {
 			throw new UserNotfoundException("User not found!! Please provide valid id.");
 		}
-		return UserMapper.mapEntityToModel(optionalUser.get());
+		return UserMapper.mapEntityToModel(user);
 	}
 
 	@Override

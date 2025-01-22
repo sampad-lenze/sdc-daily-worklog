@@ -8,6 +8,7 @@ import java.util.Objects;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,7 +49,7 @@ public class UserController {
 		return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
+	@DeleteMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<HttpStatus> deleteUser(@PathVariable(name = "id")  String id) {
 		if(userService.deleteUser(id)) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT); 

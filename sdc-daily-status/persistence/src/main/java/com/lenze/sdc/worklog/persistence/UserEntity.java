@@ -1,5 +1,7 @@
 package com.lenze.sdc.worklog.persistence;
 
+import com.lenze.sdc.worklog.core.model.UsersEmbeddedId;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

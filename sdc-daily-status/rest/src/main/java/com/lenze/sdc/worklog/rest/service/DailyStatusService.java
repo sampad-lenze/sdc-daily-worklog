@@ -1,17 +1,14 @@
 package com.lenze.sdc.worklog.rest.service;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
 import com.lenze.sdc.worklog.core.exception.WorkLogNotFoundException;
-import com.lenze.sdc.worklog.core.model.TicketModel;
 import com.lenze.sdc.worklog.core.model.WorklogModel;
 import com.lenze.sdc.worklog.core.service.WorklogCoreService;
 import com.lenze.sdc.worklog.rest.dto.DailyStatusRequest;

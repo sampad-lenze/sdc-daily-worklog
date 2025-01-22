@@ -1,8 +1,11 @@
-package com.lenze.sdc.worklog.persistence;
+package com.lenze.sdc.worklog.core.model;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+import lombok.Getter;
+
+@Getter
 public class UsersEmbeddedId implements Serializable {
 
 	private static final long serialVersionUID = 1L;

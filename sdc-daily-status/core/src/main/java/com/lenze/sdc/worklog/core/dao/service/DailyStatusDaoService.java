@@ -12,6 +12,7 @@ public interface DailyStatusDaoService {
 	List<WorklogModel> fetchByName(String userName);
 	void postDailyStatus(WorklogModel model);
 	void updateDailyStatus(WorklogModel model);
+	void deleteDailyStatusByUserName(String userName);
 	List<WorklogModel> getWorklogByUserNameFilterInput(String userId, String filterInput);
 	List<String> findUsersWithEntriesForDate(String projectName, LocalDate date);
 }

@@ -79,4 +79,9 @@ public class DailyStatusDaoServiceImpl implements DailyStatusDaoService{
 	public List<String> findUsersWithEntriesForDate(String projectName, LocalDate date) {
 		return worklogRepository.findUsersWithEntriesForDate(projectName, date);
 	}
+
+	@Override
+	public void deleteDailyStatusByUserName(String userName) {
+		worklogRepository.deleteByUserName(userName);
+	}
 }
