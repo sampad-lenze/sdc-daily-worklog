@@ -1,0 +1,60 @@
+version: "3"
+
+services:
+  nginx:
+    build:
+      context: .\sdc-daily-status-nginx
+    ports:
+      - 80:80
+  worklog-api:
+    #    container_name: worklog_app
+    build:
+      context: .\sdc-daily-status\application
+      dockerfile: Dockerfile
+    ports:
+      - 8088:8088
+    depends_on:
+      - postgres
+
+  worklog-client:
+    build:
+      context: .\sdc-daily-status-client
+      dockerfile: Dockerfile
+    # ports:
+    #   - 3000:3000
+    depends_on:
+      - worklog-api
+    volumes:
+      - ./sdc-daily-status-client:/app
+      - /app/node_modules
+  postgres:
+    #    container_name: worklog_db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: testdb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - 5432:5432
+  #    volumes:
+  #      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    #    container_name: worklog_pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@test.com
+      PGADMIN_DEFAULT_PASSWORD: test
+    ports:
+      - 5080:80
+    depends_on:
+      - postgres
+#volumes:
+#   postgres_data:
+#   pgadmin_data:
+#
+#networks:
+#  worklog-network:
+#    driver: bridge

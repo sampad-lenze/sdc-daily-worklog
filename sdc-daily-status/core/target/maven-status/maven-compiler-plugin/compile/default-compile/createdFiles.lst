@@ -1,0 +1,15 @@
+com\lenze\sdc\worklog\core\dao\service\FileStorageDaoService.class
+com\lenze\sdc\worklog\core\model\DailyStatusModel$DailyStatusModelBuilder.class
+com\lenze\sdc\worklog\core\exception\UserNotfoundException.class
+com\lenze\sdc\worklog\core\dao\service\UsersDaoService.class
+com\lenze\sdc\worklog\core\dao\service\DailyStatusDaoService.class
+com\lenze\sdc\worklog\core\model\WorklogModel.class
+com\lenze\sdc\worklog\core\model\UserModel.class
+com\lenze\sdc\worklog\core\model\DailyStatusModel$DailyStatusModelBuilderImpl.class
+com\lenze\sdc\worklog\core\model\DailyStatusModel.class
+com\lenze\sdc\worklog\core\model\UserModel$UserModelBuilderImpl.class
+com\lenze\sdc\worklog\core\service\WorklogCoreService.class
+com\lenze\sdc\worklog\core\model\WorklogModel$WorklogModelBuilder.class
+com\lenze\sdc\worklog\core\model\UserModel$UserModelBuilder.class
+com\lenze\sdc\worklog\core\model\WorklogModel$WorklogModelBuilderImpl.class
+com\lenze\sdc\worklog\core\exception\WorkLogNotFoundException.class

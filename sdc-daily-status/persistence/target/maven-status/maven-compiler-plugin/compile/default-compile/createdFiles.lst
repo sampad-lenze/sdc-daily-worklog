@@ -1,0 +1,10 @@
+com\lenze\sdc\worklog\daoservice\UsersDaoServiceImpl.class
+com\lenze\sdc\worklog\mapper\WorkLogMapper.class
+com\lenze\sdc\worklog\daoservice\FileStorageDaoServiceImpl.class
+com\lenze\sdc\worklog\mapper\UserMapper.class
+com\lenze\sdc\worklog\persistence\WorklogEntity.class
+com\lenze\sdc\worklog\daoservice\DailyStatusDaoServiceImpl.class
+com\lenze\sdc\worklog\persistence\UsersRepository.class
+com\lenze\sdc\worklog\persistence\WorklogRepository.class
+com\lenze\sdc\worklog\persistence\UserEntity.class
+com\lenze\sdc\worklog\persistence\UsersEmbeddedId.class
