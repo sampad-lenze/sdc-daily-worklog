@@ -34,7 +34,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
-        context: .
+        context: ./sdc-daily-status/application
         file: ./sdc-daily-status/application/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_POC_USERNAME }}/sdc-daily-status:latest
