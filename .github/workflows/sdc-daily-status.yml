@@ -35,6 +35,6 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: .
-        file: ./sdc-daily-status/Dockerfile
+        file: ./sdc-daily-status/application/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_POC_USERNAME }}/sdc-daily-status:latest
