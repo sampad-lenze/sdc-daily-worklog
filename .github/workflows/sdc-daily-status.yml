@@ -37,4 +37,4 @@ jobs:
         context: .
         file: ./sdc-daily-status/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/sdc-daily-status:latest
+        tags: ${{ secrets.DOCKER_POC_USERNAME }}/sdc-daily-status:latest
