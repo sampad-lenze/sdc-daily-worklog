@@ -1,0 +1,39 @@
+name: build sdc-daily-status-client
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./sdc-daily-status-client
+
+      - name: Build the React app
+        run: npm run build
+        working-directory: ./sdc-daily-status-client
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_POC_USERNAME }}
+          password: ${{ secrets.DOCKER_POC_PASSWORD }}
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_POC_USERNAME }}/sdc-daily-status-client:latest .
+          docker push ${{ secrets.DOCKER_POC_USERNAME }}/sdc-daily-status-client:latest
