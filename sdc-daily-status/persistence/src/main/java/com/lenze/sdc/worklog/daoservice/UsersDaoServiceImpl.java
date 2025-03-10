@@ -64,7 +64,12 @@ public class UsersDaoServiceImpl implements UsersDaoService{
 
 	@Override
 	public List<UserModel> findAllUsersByProject(String project) {
-		List<UserEntity> list = usersRepository.findAllUsersByProjectName(project);
+		List<UserEntity> list;
+		if(project.equalsIgnoreCase("NA")) {
+			list = usersRepository.findAll();
+		}else {
+			list = usersRepository.findAllUsersByProjectName(project);
+		}
 		return list.stream().map(UserMapper::mapEntityToModel).toList();
 	}
 }

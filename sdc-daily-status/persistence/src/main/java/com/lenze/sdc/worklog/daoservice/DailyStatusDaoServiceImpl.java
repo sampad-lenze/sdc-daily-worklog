@@ -3,6 +3,7 @@ package com.lenze.sdc.worklog.daoservice;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -27,6 +28,10 @@ public class DailyStatusDaoServiceImpl implements DailyStatusDaoService{
 	@Override
 	@Transactional
 	public void postDailyStatus(WorklogModel worklog) {
+		WorklogModel existingData = this.findByNameAndDate(worklog.getUserName(), worklog.getDate());
+		if(Objects.nonNull(existingData)) {
+			this.deleteDailyStatusByUserName(existingData.getUserName());
+		}
 		WorklogEntity entity = WorkLogMapper.mapModelToEntity(worklog);
 		worklogRepository.save(entity);
 	}
@@ -76,12 +81,33 @@ public class DailyStatusDaoServiceImpl implements DailyStatusDaoService{
 	}
 
 	@Override
-	public List<String> findUsersWithEntriesForDate(String projectName, LocalDate date) {
-		return worklogRepository.findUsersWithEntriesForDate(projectName, date);
+	public List<WorklogModel> findUsersWithEntriesForDate(String projectName, LocalDate date) {
+		 List<WorklogEntity> entriesForDate;
+		if(projectName.equalsIgnoreCase("NA")) {
+			entriesForDate = worklogRepository.findAllUsersWithEntriesForDate(date);
+		}else {
+			entriesForDate = worklogRepository.findUsersWithEntriesForDate(projectName, date);
+		}
+		 return entriesForDate.stream().map(WorkLogMapper::mapEntityToModel).toList();
 	}
 
 	@Override
 	public void deleteDailyStatusByUserName(String userName) {
 		worklogRepository.deleteByUserName(userName);
+	}
+
+	@Override
+	public List<WorklogModel> findByNameAndDateRange(String userName, LocalDate startDate, LocalDate endDate) {
+		List<WorklogEntity> list = worklogRepository.findByNameAndDateRange(userName, startDate, endDate);
+		return list.stream().map(WorkLogMapper::mapEntityToModel).toList();
+	}
+
+	@Override
+	public WorklogModel findByNameAndDate(String userName, LocalDate date) {
+		WorklogEntity entity = worklogRepository.findByNameAndDate(userName, date);
+		if(Objects.nonNull(entity)) {
+			return WorkLogMapper.mapEntityToModel(entity);
+		}
+		return null;
 	}
 }

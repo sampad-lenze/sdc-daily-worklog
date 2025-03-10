@@ -7,10 +7,11 @@ services:
     ports:
       - 80:80
   worklog-api:
-    #    container_name: worklog_app
     build:
       context: .\sdc-daily-status\application
       dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=production
     ports:
       - 8088:8088
     depends_on:
@@ -22,13 +23,14 @@ services:
       dockerfile: Dockerfile
     # ports:
     #   - 3000:3000
+    environment:
+      - NODE_ENV=production
     depends_on:
       - worklog-api
     volumes:
       - ./sdc-daily-status-client:/app
       - /app/node_modules
   postgres:
-    #    container_name: worklog_db
     image: postgres
     restart: always
     environment:
@@ -41,7 +43,6 @@ services:
   #      - postgres_data:/var/lib/postgresql/data
 
   pgadmin:
-    #    container_name: worklog_pgadmin4
     image: dpage/pgadmin4
     restart: always
     environment:
@@ -51,10 +52,3 @@ services:
       - 5080:80
     depends_on:
       - postgres
-#volumes:
-#   postgres_data:
-#   pgadmin_data:
-#
-#networks:
-#  worklog-network:
-#    driver: bridge

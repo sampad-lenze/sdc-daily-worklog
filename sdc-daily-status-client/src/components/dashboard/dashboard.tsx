@@ -22,18 +22,19 @@ import {
   ListItem,
 } from "@chakra-ui/react";
 import { Footer } from "./footer";
-import { Header } from "./header";
 import { useEffect, useState } from "react";
 import { User } from "./tasksLoader";
 import axios from "axios";
 import { FaGrav } from "react-icons/fa";
+import { Header } from "./header";
 
 export const Dashboard = () => {
+  const API_URL = process.env.REACT_APP_API_URL;
   const [users, setUsers] = useState<User[]>([]);
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = axios.get(`http://localhost:8088/api/users`);
+        const response = axios.get(`${API_URL}/api/users`);
         setUsers((await response).data);
       } catch (error) {
         console.error("Error fetching tasks:", error);
@@ -56,12 +57,12 @@ export const Dashboard = () => {
   const fetchUserData = async (username: string) => {
     try {
       const leaveResponse = await fetch(
-        `http://localhost:8088/api/worklog/daily/${username}/leave`
+        `${API_URL}/api/worklog/daily/${username}/leave`
       );
       const leaveData = await leaveResponse.json();
 
       const trainingResponse = await fetch(
-        `http://localhost:8088/api/worklog/daily/${username}/training`
+        `${API_URL}/api/worklog/daily/${username}/training`
       );
       const trainingData = await trainingResponse.json();
 
@@ -81,11 +82,11 @@ export const Dashboard = () => {
     <>
       <Header />
       <Grid
-        position="fixed"
         left="0"
         right="0"
         minH="100vh"
-        templateRows="repeat(1, 1fr)"
+        width="100%"
+        templateRows="repeat(1, 50%)"
         templateColumns="repeat(7, 1fr)"
         gap={2}
       >
@@ -170,7 +171,7 @@ export const Dashboard = () => {
                             <ul>
                               {data[m.userName].leaveDates.map(
                                 (date, index) => (
-                                  <List>
+                                  <List key={index}>
                                     <ListItem key={index}>
                                       <ListIcon as={FaGrav} color="green.500" />
                                       <Text fontWeight="bold">{date}</Text>

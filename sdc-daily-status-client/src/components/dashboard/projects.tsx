@@ -22,6 +22,7 @@ import { MobileNav, SidebarContent } from "./navigationBar";
 import { useUser } from "../context/userContext";
 
 export const Projects = () => {
+  const API_URL = process.env.REACT_APP_API_URL;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [tasks, setTasks] = useState<Task[]>([]);
   const { selectedUser } = useUser();
@@ -30,22 +31,13 @@ export const Projects = () => {
     const fetchTasksForUser = async () => {
       if (selectedUser) {
         try {
-          const response = await fetch(`http://localhost:8088/api/worklog/daily/${selectedUser}`);
+          const response = await fetch(`${API_URL}/api/worklog/daily/${selectedUser}`);
           const data = await response.json();
           setTasks(data);
         } catch (error) {
           console.error('Error fetching tasks:', error);
         }
       }
-      // else{
-      //   try{
-      //   const response = await fetch(`http://localhost:8088/api/worklog/daily`);
-      //     const data = await response.json();
-      //     setTasks(data);
-      //   } catch (error) {
-      //     console.error('Error fetching tasks:', error);
-      //   }
-      // }
     };
   
     fetchTasksForUser();
@@ -56,7 +48,7 @@ export const Projects = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch(`http://localhost:8088/api/worklog/daily`);
+      const response = await fetch(`${API_URL}/api/worklog/daily`);
       const data = await response.json();
       setTasks(data);
     } catch (error) {
@@ -95,7 +87,7 @@ export const Projects = () => {
   return (
     <>
       <Header />
-      <Flex bg="gray.100">
+      <Flex bg="gray.100" h="100vh">
         <Box h="full" bg={useColorModeValue("gray.100", "gray.900")}>
           <SidebarContent
             onClose={() => onClose}
@@ -116,7 +108,7 @@ export const Projects = () => {
           {/* mobilenav */}
           <MobileNav display={{ base: "flex", md: "none" }} onOpen={onOpen} />
         </Box>
-        <Box ml={{ base: 0, md: 60 }} p="6" style={{ width: "100%" }}>
+        <Box p="6" style={{ width: "100%" }}>
           <Flex justifyContent={"space-evenly"} mb="20px">
             <Heading>
               <HStack>
@@ -129,7 +121,6 @@ export const Projects = () => {
             <SearchBar/>
           </Flex>
           <SimpleGrid columns={5} spacingX="30px" spacingY="20px">
-            {/* {tasks && tasks.map((t) => <TaskCard key={t.id} {...t} />)} */}
             {filteredTasks && filteredTasks.map((t) => <TaskCard key={t.id} {...t} />)}
           </SimpleGrid>
         </Box>

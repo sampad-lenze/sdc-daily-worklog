@@ -24,7 +24,7 @@ export const Header = (props: any) => {
               <Image
                 borderRadius="full"
                 boxSize="70px"
-                src="/logo.png"
+                src="/app-logo.png"
                 alt="logo"
               />
             </Box>
@@ -33,7 +33,7 @@ export const Header = (props: any) => {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              <NavigationLink path="/dashboard">Dashboard</NavigationLink>
+              <NavigationLink path="/">Dashboard</NavigationLink>
               <NavigationLink path="/projects">Projects</NavigationLink>
               <NavigationLink path="/team">Team</NavigationLink>
             </HStack>
@@ -50,10 +50,9 @@ export const Header = (props: any) => {
                 <Avatar size={"sm"} src={"/avatar.jpg"} />
               </MenuButton>
               <MenuList>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
+                <MenuItem>Profile</MenuItem>
                 <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
+                <MenuItem>Sign out</MenuItem>
               </MenuList>
             </Menu>
           </Flex>

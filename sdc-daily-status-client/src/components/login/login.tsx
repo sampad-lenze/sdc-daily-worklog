@@ -23,7 +23,6 @@ export const Login = () => {
       rememberMe: false,
     },
     onSubmit: (values: any) => {
-    //   alert(JSON.stringify(values, null, 2));
       if (values && values.password === users[0].password) {
         toast({
             title: `Successfully logged in.`,

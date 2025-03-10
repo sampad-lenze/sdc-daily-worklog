@@ -11,6 +11,7 @@ import { Task } from "./tasksLoader";
 import { useNavigate } from "react-router-dom";
 
 export const SearchBar = () => {
+  const API_URL = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [searchInput, setSearchInput] = useState("");
@@ -18,7 +19,7 @@ export const SearchBar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8088/api/worklog/daily');
+        const response = await fetch(`${API_URL}/api/worklog/daily`);
         const result = await response.json();
         setTasks(result);
       } catch (error) {

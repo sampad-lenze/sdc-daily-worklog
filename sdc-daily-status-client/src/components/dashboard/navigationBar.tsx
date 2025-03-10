@@ -11,15 +11,14 @@ interface SidebarProps extends BoxProps {
   }
   
   export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+    const API_URL = process.env.REACT_APP_API_URL;
     const [users, setUsers] = useState<User[]>([]);
-    // const [selectedUser, setSelectedUser] = useState<string | null>('');
-
     const { setSelectedUser } = useUser();
     useEffect(() => {
       const fetchUsers = async () => {
         try {
           const response = axios.get(
-            `http://localhost:8088/api/users`
+            `${API_URL}/api/users`
           );
           setUsers((await response).data);
         } catch (error) {
@@ -40,7 +39,6 @@ interface SidebarProps extends BoxProps {
       return (
         <Box
           as="a"
-        //   href={`http://localhost:3000/projects`}
           onClick={() => setSelectedUser(userName)}
           style={{ textDecoration: "none" }}
           _focus={{ boxShadow: "none" }}
@@ -82,8 +80,8 @@ interface SidebarProps extends BoxProps {
           borderRight="1px"
           borderRightColor={useColorModeValue("gray.200", "gray.700")}
           w={{ base: "full", md: 60 }}
-          pos="fixed"
-          h="full"
+          // pos="fixed"
+          // h="full"
           {...rest}
         >
           <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">

@@ -17,13 +17,20 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { ExportToExcel } from "./exportToExcel";
 
 export const UserRegistration = () => {
+  const API_URL = process.env.REACT_APP_API_URL;
   const [showForm, setShowForm] = useState(false);
+  const [showDownloadForm, setShowDownloadForm] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
   const handleClick = (shouldClose : boolean) => {
     setShowForm(shouldClose);
+  };
+
+  const handleClickForDownloadForm = (shouldClose : boolean) => {
+    setShowDownloadForm(shouldClose);
   };
 
   const initialUser = {
@@ -54,7 +61,7 @@ export const UserRegistration = () => {
     validationSchema: userRegistrationFormValidation,
     onSubmit: (value) => {
       const newUser = { ...value, value };
-      axios.post("http://localhost:8088/api/users/register", newUser).then((res) => {
+      axios.post(`${API_URL}/api/users/register`, newUser).then((res) => {
         toast({
           title: `User has been successfully registered!!`,
           status: `success`,
@@ -69,7 +76,7 @@ export const UserRegistration = () => {
 
   return (
     <>
-      {!showForm &&  
+      {!showForm && !showDownloadForm &&  
        <Box p={5}>
       <VStack spacing={4}>
         <Text fontSize="lg">
@@ -79,7 +86,18 @@ export const UserRegistration = () => {
           Sign up
         </Button>
       </VStack>
+      <VStack spacing={4}>
+        <Text fontSize="lg">
+        To export your data, please click on the Export button.
+        </Text>
+        <Button colorScheme="teal" onClick={() => handleClickForDownloadForm(true)}>
+          Export
+        </Button>
+      </VStack>
     </Box>
+      }
+      {showDownloadForm &&
+          <ExportToExcel handleClickForDownloadForm={setShowDownloadForm}/>
       }
       {showForm && (
         <Box p={6} rounded="md" >

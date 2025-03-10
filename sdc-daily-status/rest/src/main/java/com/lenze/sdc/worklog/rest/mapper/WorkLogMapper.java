@@ -1,5 +1,8 @@
 package com.lenze.sdc.worklog.rest.mapper;
 
+import java.time.temporal.WeekFields;
+import java.util.Locale;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,38 +17,13 @@ import lombok.NoArgsConstructor;
 public class WorkLogMapper {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(WorkLogMapper.class);
-
-//	public static WorklogEntity mapModelToEntity(WorklogModel worklogModel) {
-//		LOGGER.info("Map model to entity {}", worklogModel);
-//		return WorklogEntity.builder()
-//				.weekNumber(worklogModel.getWeekNumber())
-//				.date(worklogModel.getDate())
-//				.projectName(worklogModel.getProjectName())
-//				.workDetails(worklogModel.getWorkDetails())
-//				.workingHours(worklogModel.getWorkingHours())
-//				.userName(worklogModel.getUserName())
-//				.status(worklogModel.getStatus())
-//				.build();
-//	}
-
-//	public static WorklogModel mapEntityToModel(WorklogEntity worklogEntity) {
-//		LOGGER.info("Map entity to model {}", worklogEntity);
-//		return WorklogModel.builder()
-//				.id(worklogEntity.getId())
-//				.weekNumber(worklogEntity.getWeekNumber())
-//				.date(worklogEntity.getDate())
-//				.projectName(worklogEntity.getProjectName())
-//				.workDetails(worklogEntity.getWorkDetails())
-//				.workingHours(worklogEntity.getWorkingHours())
-//				.status(worklogEntity.getStatus())
-//				.userName(worklogEntity.getUserName())
-//				.build();
-//	}
 	
 	public static WorklogModel mapRequestDtoToModel(DailyStatusRequest request) {
 		LOGGER.info("Map dto to model {}", request);
+		WeekFields weekFields = WeekFields.of(Locale.getDefault());
+	    int weekNumber = request.getDate().get(weekFields.weekOfWeekBasedYear());
 		return WorklogModel.builder()
-				.weekNumber(request.getWeekNumber())
+				.weekNumber(weekNumber)
 				.date(request.getDate())
 				.projectName(request.getProjectName())
 				.workDetails(request.getWorkDetails())

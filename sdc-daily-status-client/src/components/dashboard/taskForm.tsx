@@ -17,13 +17,13 @@ import {
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { getWeek } from "date-fns";
 import * as Yup from "yup";
 import "../../style/utility.css";
 import { UserRegistration } from "./userRegistration";
 import { useEffect, useState } from "react";
 
 export const TaskForm = () => {
+  const API_URL = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   const toast = useToast();
   const successMessage = () => {
@@ -71,15 +71,10 @@ export const TaskForm = () => {
     onSubmit: (value, { resetForm }) => {
       const newTask = {
         ...value,
-        // workingHours: value.workingHours,
-        // userName: value.userName,
-        // workDetails: value.workDetails,
-        // projectName: value.projectName,
-        // status: value?.status,
         date: new Date(value.date ? value.date : ""),
       };
       axios
-        .post("http://localhost:8088/api/worklog/daily", newTask)
+        .post(`${API_URL}/api/worklog/daily`, newTask)
         .then((res) => {
           successMessage();
           resetForm();
@@ -88,6 +83,12 @@ export const TaskForm = () => {
         })
         .catch((error) => {
           console.error("There was an error making the request:", error);
+          toast({
+            title: `There is some error while submitting, if new user please sign up first!!`,
+            status: `error`,
+            isClosable: true,
+            position: `top`,
+          });
         });
     },
   });
@@ -98,7 +99,7 @@ export const TaskForm = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8088/api/worklog/daily/NAT/pending"
+          `${API_URL}/api/worklog/daily/NA/pending`
         );
         const result = await response.json();
         setpendingUserList(result);
@@ -143,23 +144,6 @@ export const TaskForm = () => {
                     <div className="error">{formik.errors.date}</div>
                   ) : null}
                 </FormControl>
-                <FormControl>
-                  <FormLabel htmlFor="weekNumber">Week Number</FormLabel>
-                  <Input
-                    id="weekNumber"
-                    name="weekNumber"
-                    type="number"
-                    variant="filled"
-                    onChange={formik.handleChange}
-                    value={getWeek(
-                      formik.values.date ? formik.values.date : ""
-                    )}
-                    disabled={true}
-                  />
-                  {formik.touched.weekNumber && formik.errors.weekNumber ? (
-                    <div className="error">{formik.errors.weekNumber}</div>
-                  ) : null}
-                </FormControl>
               </HStack>
               <FormControl>
                 <FormLabel htmlFor="description">Work details</FormLabel>
@@ -200,7 +184,6 @@ export const TaskForm = () => {
                     variant="filled"
                     onChange={formik.handleChange}
                     value={formik.values.userName}
-                    // w="75%"
                   />
                   {formik.touched.userName && formik.errors.userName ? (
                     <div className="error">{formik.errors.userName}</div>

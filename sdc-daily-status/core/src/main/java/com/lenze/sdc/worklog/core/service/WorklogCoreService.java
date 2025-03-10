@@ -71,9 +71,16 @@ public class WorklogCoreService {
 		return statusDaoService.getWorklogByUserNameFilterInput(userName.toLowerCase(), filterInput.toLowerCase());
 	}
 	   
-	public List<String> getWhoIsPending(String projectName, LocalDate today) {
-		List<String> allUsers = usersDaoService.findAllUsersByProject(projectName).stream().map(u -> u.getUserName()).toList();
-		List<String> usersWithEntries = statusDaoService.findUsersWithEntriesForDate(projectName, today);
-		return allUsers.stream().filter(user -> !usersWithEntries.contains(user)).toList();
+	public List<String> getPendingUsers(String projectName, LocalDate today) {
+		List<String> allUsers = usersDaoService.findAllUsersByProject(projectName).stream().map(u -> u.getUserName())
+				.toList();
+		List<WorklogModel> usersWithEntries = statusDaoService.findUsersWithEntriesForDate(projectName, today);
+		return allUsers.stream().filter(user -> usersWithEntries.stream()
+				.map(WorklogModel::getUserName).noneMatch(userName -> userName.equals(user))).toList();
+	}
+
+	public List<WorklogModel> exportToExcel(String userName, LocalDate startDate, LocalDate endDate) {
+		return statusDaoService.findByNameAndDateRange(userName, startDate, endDate);
+		
 	}
 }

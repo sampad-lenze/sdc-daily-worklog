@@ -14,5 +14,7 @@ public interface DailyStatusDaoService {
 	void updateDailyStatus(WorklogModel model);
 	void deleteDailyStatusByUserName(String userName);
 	List<WorklogModel> getWorklogByUserNameFilterInput(String userId, String filterInput);
-	List<String> findUsersWithEntriesForDate(String projectName, LocalDate date);
+	List<WorklogModel> findUsersWithEntriesForDate(String projectName, LocalDate date);
+	List<WorklogModel> findByNameAndDateRange(String userName, LocalDate startDate, LocalDate endDate);
+	WorklogModel findByNameAndDate(String userName, LocalDate date);
 }

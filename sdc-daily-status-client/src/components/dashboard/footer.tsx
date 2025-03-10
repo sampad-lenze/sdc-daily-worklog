@@ -48,7 +48,7 @@ export const Footer = () => {
     <Box
       bg={useColorModeValue("purple.100", "purple.900")}
       color={useColorModeValue("purple.700", "purple.200")}
-      position="fixed"
+      // position="fixed"
       left="0"
       bottom="0"
       right="0"

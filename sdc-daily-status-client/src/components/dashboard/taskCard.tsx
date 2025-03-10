@@ -41,14 +41,6 @@ export const TaskCard = (task: Task) => {
               <Text color="blue.600">by {task.userName}</Text>
             </Box>
           </Flex>
-          {/* <ButtonGroup spacing="2">
-            <IconButton
-              colorScheme="teal"
-              // aria-label="Call Segun"
-              size="sm"
-              icon={<FaEdit />}
-            />
-          </ButtonGroup> */}
         </CardHeader>
         <CardBody color="grey.500">
           <Tooltip label={task.workDetails} aria-label="A tooltip">
